@@ -58,6 +58,13 @@ const styles = StyleSheet.create({
     },
   });
 
+  const formatNumber = (number) => {
+    if (number >= 1000) {
+      return `${(number / 1000).toFixed(1)}K`;
+    }
+    return number.toString();
+  };
+
 const RepositoryItem = ({ item, index }) => {
     const flexItem = index % 2 === 0 ? styles.flexItemA : styles.flexItemB;
   
@@ -77,11 +84,11 @@ const RepositoryItem = ({ item, index }) => {
             <Text style={styles.language}>{item.language}</Text>
           </View>
           <View style={styles.statsContainer}>
-            <Text style={styles.stat}>{item.stargazersCount} Stars</Text>
-            <Text style={styles.stat}>{item.forksCount} Forks</Text>
-            <Text style={styles.stat}>{item.reviewCount} Reviews</Text>
-            <Text style={styles.stat}>{item.ratingAverage} Rating</Text>
-          </View>
+          <Text style={styles.stat}>{formatNumber(item.stargazersCount)} Stars</Text>
+          <Text style={styles.stat}>{formatNumber(item.forksCount)} Forks</Text>
+          <Text style={styles.stat}>{formatNumber(item.reviewCount)} Reviews</Text>
+          <Text style={styles.stat}>{formatNumber(item.ratingAverage)} Rating</Text>
+        </View>
         </View>
       </View>
     );
