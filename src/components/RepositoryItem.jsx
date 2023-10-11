@@ -8,11 +8,11 @@ const RepositoryItem = ({ item, index }) => {
     const styles = StyleSheet.create({
         flexItemA: {
           flexGrow: 0,
-          backgroundColor: 'green',
+          backgroundColor: '#F5F5F5',
         },
         flexItemB: {
           flexGrow: 1,
-          backgroundColor: 'blue',
+          backgroundColor: '#ECEFF1',
         },
       });
     const flexItem = index % 2 === 0 ? styles.flexItemA : styles.flexItemB;
