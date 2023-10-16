@@ -21,6 +21,23 @@ const styles = StyleSheet.create({
   // ...
 });
 
+const ForLoggedOut = () => {
+  return (
+    <>
+      <AppBarTab text='Sign in' linkTo='/signin' />
+      <AppBarTab text='Sign up' linkTo='/signup' />
+    </>
+  )
+}
+
+const ForLoggedIn = () => {
+  return (
+    <>
+      <AppBarTab text='Sign out' linkTo='/signout' />
+      <AppBarTab text='My reviews' linkTo='/myreviews' />
+    </>
+  )
+}
 
 
 const AppBar = () => {
@@ -30,8 +47,9 @@ const AppBar = () => {
   <View style={styles.container}>
       <ScrollView horizontal contentContainerStyle={styles.scrollView} >
         <AppBarTab text='Repositories' linkTo='/' />
-        {data && data.me ? <AppBarTab text='Sign out' linkTo='/signout'/> 
-        : <AppBarTab text='Sign in' linkTo='/signin'/>}
+        <AppBarTab text='Create a review' linkTo='/newreview' />
+        {data && data.me ? <ForLoggedIn />
+        : <ForLoggedOut />}
       </ScrollView>
   </View>
   )

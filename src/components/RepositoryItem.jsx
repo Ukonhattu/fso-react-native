@@ -1,6 +1,8 @@
 // render repository item react-native
-import { View, StyleSheet, Image} from "react-native";
+import { View, StyleSheet, Image, Button } from "react-native";
 import Text from "./Text";
+import { Linking } from 'react-native';
+
 
 const styles = StyleSheet.create({
     flexItemA: {
@@ -65,34 +67,62 @@ const styles = StyleSheet.create({
     return number.toString();
   };
 
-const RepositoryItem = ({ item, index }) => {
-    const flexItem = index % 2 === 0 ? styles.flexItemA : styles.flexItemB;
-  
-    return (
-      <View style={flexItem}>
-        <View style={styles.imageContainer}>
-          <Image source={{ uri: item.ownerAvatarUrl }} style={styles.image} />
-        </View>
-        <View style={styles.textContainer}>
-          <View style={styles.nameContainer}>
-            <Text fontWeight='bold' fontSize='subheading'>{item.fullName}</Text>
-          </View>
-          <View style={styles.descriptionContainer}>
-            <Text style={styles.description}>{item.description}</Text>
-          </View>
-          <View style={styles.languageContainer}>
-            <Text style={styles.language}>{item.language}</Text>
-          </View>
-          <View style={styles.statsContainer}>
-          <Text style={styles.stat}>{formatNumber(item.stargazersCount)} Stars</Text>
-          <Text style={styles.stat}>{formatNumber(item.forksCount)} Forks</Text>
-          <Text style={styles.stat}>{formatNumber(item.reviewCount)} Reviews</Text>
-          <Text style={styles.stat}>{formatNumber(item.ratingAverage)} Rating</Text>
-        </View>
-        </View>
-      </View>
-    );
+
+const RepositoryItem = ({ item, index = 0, isLone }) => {
+  const flexItem = index % 2 === 0 ? styles.flexItemA : styles.flexItemB;
+
+  const handleOpenUrl = () => {
+    Linking.openURL(item.url);
   };
+  
+  if (!item) {
+    return null;
+  }
+
+  return (
+    <View style={flexItem} testID="repositoryItemContainer">
+      <View style={styles.imageContainer} testID="repositoryItemImageContainer">
+        <Image source={{ uri: item.ownerAvatarUrl }} style={styles.image} testID="repositoryItemImage" />
+      </View>
+      <View style={styles.textContainer} testID="repositoryItemTextContainer">
+        <View style={styles.nameContainer} testID="repositoryItemNameContainer">
+          <Text fontWeight="bold" fontSize="subheading" testID="repositoryItemFullName">
+            {item.fullName}
+          </Text>
+        </View>
+        <View style={styles.descriptionContainer} testID="repositoryItemDescriptionContainer">
+          <Text style={styles.description} testID="repositoryItemDescription">
+            {item.description}
+          </Text>
+        </View>
+        <View style={styles.languageContainer} testID="repositoryItemLanguageContainer">
+          <Text style={styles.language} testID="repositoryItemLanguage">
+            {item.language}
+          </Text>
+        </View>
+        <View style={styles.statsContainer} testID="repositoryItemStatsContainer">
+          <Text style={styles.stat} testID="repositoryItemStars">
+            {formatNumber(item.stargazersCount)} Stars
+          </Text>
+          <Text style={styles.stat} testID="repositoryItemForks">
+            {formatNumber(item.forksCount)} Forks
+          </Text>
+          <Text style={styles.stat} testID="repositoryItemReviews">
+            {formatNumber(item.reviewCount)} Reviews
+          </Text>
+          <Text style={styles.stat} testID="repositoryItemRating">
+            {formatNumber(item.ratingAverage)} Rating
+          </Text>
+        </View>
+        {isLone && (
+          <View style={{ marginTop: 10 }}>
+            <Button onPress={handleOpenUrl} title="Open in GitHub" />
+          </View>
+        )}
+      </View>
+    </View>
+  );
+};
   
 
 export default RepositoryItem;
